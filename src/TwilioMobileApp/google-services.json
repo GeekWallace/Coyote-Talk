@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "740415095671",
+    "project_id": "twiliophoneapp",
+    "storage_bucket": "twiliophoneapp.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:740415095671:android:7afb00a7c4ed3959bd9772",
+        "android_client_info": {
+          "package_name": "com.twiliomobileapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwAeCCeTK6tXo0W49_69qP3uqWt4HVcTg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

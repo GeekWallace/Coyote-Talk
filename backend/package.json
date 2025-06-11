@@ -1,0 +1,24 @@
+{
+  "name": "backup",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Backend for Twilio Mobile App",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.18.2",
+    "firebase-admin": "^13.0.0",
+    "twilio": "^5.2.0"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.0",
+    "@types/twilio": "^3.19.2"
+  }
+}
