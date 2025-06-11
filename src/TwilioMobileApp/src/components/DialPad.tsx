@@ -52,11 +52,10 @@ const DialPad: React.FC = () => {
       setActiveNumber(fromNumber);
       
       // Use callWithVoicemail to enable voicemail functionality
-      await makeCall({
+      await callWithVoicemail({
         from: fromNumber,
         to: phoneNumber,
-        url: 'https://ed23-185-203-122-87.ngrok-free.app/api/make-call',
-        //timeout: 15, // 15 seconds before going to voicemail
+        timeout: 15, // seconds before going to voicemail
       });
       
       // In a real app, you would handle call state management here
