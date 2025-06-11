@@ -58,7 +58,8 @@ class TwilioService {
   async makeCall(options: CallOptions): Promise<any> {
     const data = await this.request('/api/make-call', 'POST', {
       ...options,
-      url: `${this.baseUrl}/api/voice-outbound`,
+      // Send calls to the existing voice-inbound webhook
+      url: `${this.baseUrl}/api/voice-inbound`,
     });
     return { sid: data.callSid };
   }
