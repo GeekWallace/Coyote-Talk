@@ -1,6 +1,10 @@
 const request = require('supertest');
 
 
+// Set env vars before requiring the app
+process.env.API_KEY = 'test-key';
+
+
 // Mock firebase-admin to avoid needing real credentials during tests
 jest.mock('firebase-admin', () => ({
   initializeApp: jest.fn(),
@@ -20,6 +24,7 @@ jest.mock('firebase-admin', () => ({
 // Set env vars before requiring the app
 process.env.API_KEY = 'test-key';
 process.env.TWILIO_PHONE_NUMBER = '+15558675310';
+
 const app = require('../server');
 
 describe('API routes', () => {
@@ -28,6 +33,15 @@ describe('API routes', () => {
     expect(res.status).toBe(401);
     expect(res.body).toEqual({ success: false, error: 'Unauthorized' });
   });
+
+
+  test('POST /api/voice-inbound responds with TwiML', async () => {
+    const res = await request(app)
+      .post('/api/voice-inbound')
+      .type('form')
+      .send({ CallStatus: 'ringing' });
+    expect(res.status).toBe(200);
+    expect(res.headers['content-type']).toMatch(/xml/);
 
   test('POST /api/voice-inbound parses urlencoded form data', async () => {
     const res = await request(app)
@@ -60,5 +74,6 @@ describe('API routes', () => {
     expect(res.status).toBe(200);
     expect(res.headers['content-type']).toMatch(/xml/);
     expect(res.text).toMatch(/<Dial>/);
+
   });
 });
