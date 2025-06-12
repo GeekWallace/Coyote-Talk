@@ -8,6 +8,7 @@ const { VoiceResponse, MessagingResponse } = Twilio.twiml;
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 admin.initializeApp({
   credential: admin.credential.cert(require('./serviceAccountKey.json')),
