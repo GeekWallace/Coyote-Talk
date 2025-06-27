@@ -122,7 +122,7 @@ app.post('/api/twilio-token', authenticate, async (req, res) => {
  // const { appUserId } = req.body;
 	 const { appUserId } = "1";
   if (!appUserId) {
-	return res.status(400).json({ success: false, error: 'Missing identity' });
+	return res.status(400).json({ success: false, error: 'Missing Mutu' });
   }
   try {
 	const user = await findUserByAppUserId(appUserId);
