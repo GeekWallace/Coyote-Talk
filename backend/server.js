@@ -32,8 +32,7 @@ const ninoxAppUsersTableId= process.env.NINOX_APPUSERS_TABLE_ID;
 // Base URL for Ninox record operations
 const ninoxBaseUrl =
   `https://api.ninox.com/v1/teams/${ninoxTeamId}`
- + `/databases/${ninoxDatabaseId}`
- + `/tables/${ninoxAppUsersTableId}`;
+ + `/databases/${ninoxDatabaseId}/query`;
 
 //if (!apiKey) {
 //  console.warn("⚠️  Warning: API_KEY is not defined in your .env!");
@@ -54,9 +53,9 @@ const ninoxBaseUrl =
 async function findUserByAppUserId(appUserId) {
   try {
 	const resp = await axios.post(
-	  `${ninoxBaseUrl}/query`,
+	  `${ninoxBaseUrl}`,
 	  {
-		// Ninox’s query DSL: select rows where AppUserId field equals our value
+
 		query: `(select ${ninoxAppUsersTableId} where AppUserId = "${appUserId}")`
 	  },
 	  {
@@ -79,7 +78,7 @@ async function findUserByAppUserId(appUserId) {
 async function findUserByTwilioNumber(twilioNumber) {
   try {
 	const resp = await axios.post(
-	  `${ninoxBaseUrl}/query`,
+	  `${ninoxBaseUrl}`,
 	  {
 		query: `(select ${ninoxAppUsersTableId} where AssignedTwilioNumber = "${twilioNumber}")`
 	  },
@@ -131,11 +130,11 @@ async function updateUserFCMToken(appUserId, fcmToken) {
 }
 
 // Twilio token
-app.post('/api/twilio-token', async (req, res) => {
- // const { appUserId } = req.body;
-	 const { appUserId } = "1";
+app.get('/api/twilio-token', async (req, res) => {
+  //const { appUserId } = req.body;
+	  const { appUserId } = "1";
   if (!appUserId) {
-	return res.status(400).json({ success: false, error: 'Missing mutu' + 'appUserId' });
+	return res.status(400).json({ success: false, error: 'Missing mutu' });
   }
   try {
 	const user = await findUserByAppUserId(appUserId);
