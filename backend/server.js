@@ -131,10 +131,11 @@ async function updateUserFCMToken(appUserId, fcmToken) {
 }
 
 // Twilio token
-app.get('/api/twilio-token', async (req, res) => {
-  const { appUserId } = req.body;
+app.post('/api/twilio-token', async (req, res) => {
+ // const { appUserId } = req.body;
+	 const { appUserId } = "1";
   if (!appUserId) {
-	return res.status(400).json({ success: false, error: 'Missing mutu' });
+	return res.status(400).json({ success: false, error: 'Missing mutu' + 'appUserId' });
   }
   try {
 	const user = await findUserByAppUserId(appUserId);
