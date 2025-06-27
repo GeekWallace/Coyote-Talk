@@ -56,7 +56,7 @@ async function findUserByAppUserId(appUserId) {
 	  `${ninoxBaseUrl}`,
 	  {
 
-		query: `(select ${ninoxAppUsersTableId} where AppUserId = "${appUserId}")`
+		query: `(select ${ninoxAppUsersTableId} where AppUserId = "${appUserId}").AppUserId`
 	  },
 	  {
 		headers: {
@@ -80,7 +80,7 @@ async function findUserByTwilioNumber(twilioNumber) {
 	const resp = await axios.post(
 	  `${ninoxBaseUrl}`,
 	  {
-		query: `(select ${ninoxAppUsersTableId} where AssignedTwilioNumber = "${twilioNumber}")`
+		query: `(select ${ninoxAppUsersTableId} where AssignedTwilioNumber = "${twilioNumber}").AppUserId`
 	  },
 	  {
 		headers: {
@@ -131,10 +131,9 @@ async function updateUserFCMToken(appUserId, fcmToken) {
 
 // Twilio token
 app.get('/api/twilio-token', async (req, res) => {
-  //const { appUserId } = req.body;
-	  const { appUserId } = "1";
+  const { appUserId } = '1';
   if (!appUserId) {
-	return res.status(400).json({ success: false, error: 'Missing mutu' });
+	return res.status(400).json({ success: false, error: 'Missing identity' });
   }
   try {
 	const user = await findUserByAppUserId(appUserId);
