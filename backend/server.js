@@ -131,16 +131,17 @@ async function updateUserFCMToken(appUserId, fcmToken) {
 
 // Twilio token
 app.get('/api/twilio-token', async (req, res) => {
-  const { appUserId } = req.body;
-  if (!appUserId) {
-	return res.status(400).json({ success: false, error: 'Missing identity'  });
-  }
+  //const { appUserId } = req.body;
+//  if (!appUserId) {
+//	return res.status(400).json({ success: false, error: 'Missing identity'  });
+ // }
   try {
-	const user = await findUserByAppUserId(appUserId);
-	if (!user || !user.length) {
-  return res.status(404).json({ success: false, error: 'User not found' + user });
-	}
-	const identity = user.TwilioClientIdentity;
+	//const user = await findUserByAppUserId(appUserId);
+	//if (!user || !user.length) {
+ // return res.status(404).json({ success: false, error: 'User not found' + user });
+//	}
+	//const identity = user.TwilioClientIdentity;
+	const identity = "1";
 	const AccessToken = Twilio.jwt.AccessToken;
 	const VoiceGrant = AccessToken.VoiceGrant;
 	const token = new AccessToken(
