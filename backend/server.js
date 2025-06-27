@@ -31,9 +31,9 @@ const ninoxAppUsersTableId= process.env.NINOX_APPUSERS_TABLE_ID;
 
 // Base URL for Ninox record operations
 const ninoxBaseUrl =
-  `https://api.ninox.com/v1/teams/${encodeURIComponent(ninoxTeamId)}`
- + `/databases/${encodeURIComponent(ninoxDatabaseId)}`
- + `/tables/${encodeURIComponent(ninoxAppUsersTableId)}`;
+  `https://api.ninox.com/v1/teams/${ninoxTeamId}`
+ + `/databases/${ninoxDatabaseId}`
+ + `/tables/${ninoxAppUsersTableId}`;
 
 if (!apiKey) {
   console.warn("⚠️  Warning: API_KEY is not defined in your .env!");
@@ -134,7 +134,7 @@ async function updateUserFCMToken(appUserId, fcmToken) {
 app.post('/api/twilio-token', authenticate, async (req, res) => {
   const { appUserId } = req.body;
   if (!appUserId) {
-	return res.status(400).json({ success: false, error: 'Missing Mutu' });
+	return res.status(400).json({ success: false, error: 'Missing mutu' });
   }
   try {
 	const user = await findUserByAppUserId(appUserId);
