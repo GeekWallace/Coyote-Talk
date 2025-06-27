@@ -56,7 +56,7 @@ async function findUserByAppUserId(appUserId) {
 	  `${ninoxBaseUrl}`,
 	  {
 
-		query: `(select ${ninoxAppUsersTableId} where AppUserId = "${appUserId}").AppUserId`
+		query: `(select AppUsers where AppUserId = "${appUserId}").AppUserId`
 	  },
 	  {
 		headers: {
@@ -80,7 +80,7 @@ async function findUserByTwilioNumber(twilioNumber) {
 	const resp = await axios.post(
 	  `${ninoxBaseUrl}`,
 	  {
-		query: `(select ${ninoxAppUsersTableId} where AssignedTwilioNumber = "${twilioNumber}").AppUserId`
+		query: `(select AppUsers where AssignedTwilioNumber = "${twilioNumber}").AppUserId`
 	  },
 	  {
 		headers: {
@@ -137,9 +137,9 @@ app.get('/api/twilio-token', async (req, res) => {
   }
   try {
 	const user = await findUserByAppUserId(appUserId);
-//	if (!user || !user.length) {
-//	  return res.status(404).json({ success: false, error: 'User not found' + user });
-//	}
+	if (!user || !user.length) {
+  return res.status(404).json({ success: false, error: 'User not found' + user });
+	}
 	const identity = user.TwilioClientIdentity;
 	const AccessToken = Twilio.jwt.AccessToken;
 	const VoiceGrant = AccessToken.VoiceGrant;
