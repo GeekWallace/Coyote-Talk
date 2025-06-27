@@ -34,7 +34,20 @@ const ninoxBaseUrl =
   `https://api.ninox.com/v1/teams/${encodeURIComponent(ninoxTeamId)}`
  + `/databases/${encodeURIComponent(ninoxDatabaseId)}`
  + `/tables/${encodeURIComponent(ninoxAppUsersTableId)}`;
+const apiKey = process.env.API_KEY;
+if (!apiKey) {
+  console.warn("⚠️  Warning: API_KEY is not defined in your .env!");
+}
 
+function authenticate(req, res, next) {
+  // Expect clients to send "Authorization: Bearer <API_KEY>"
+  const auth = req.headers.authorization || "";
+  const [, token] = auth.split(" ");
+  if (token !== apiKey) {
+    return res.status(401).json({ success: false, error: "Unauthorized" });
+  }
+  next();
+}
 // -------------------------------
 // 1) Find by AppUserId
 // -------------------------------
@@ -119,8 +132,7 @@ async function updateUserFCMToken(appUserId, fcmToken) {
 
 // Twilio token
 app.post('/api/twilio-token', authenticate, async (req, res) => {
- // const { appUserId } = req.body;
-	 const { appUserId } = "1";
+  const { appUserId } = req.body;
   if (!appUserId) {
 	return res.status(400).json({ success: false, error: 'Missing Mutu' });
   }
