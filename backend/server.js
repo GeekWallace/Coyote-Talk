@@ -35,19 +35,19 @@ const ninoxBaseUrl =
  + `/databases/${ninoxDatabaseId}`
  + `/tables/${ninoxAppUsersTableId}`;
 
-if (!apiKey) {
-  console.warn("⚠️  Warning: API_KEY is not defined in your .env!");
-}
-
-function authenticate(req, res, next) {
-  // Expect clients to send "Authorization: Bearer <API_KEY>"
-  const auth = req.headers.authorization || "";
-  const [, token] = auth.split(" ");
-  if (token !== apiKey) {
-    return res.status(401).json({ success: false, error: "Unauthorized" });
-  }
-  next();
-}
+//if (!apiKey) {
+//  console.warn("⚠️  Warning: API_KEY is not defined in your .env!");
+//}
+//
+//function authenticate(req, res, next) {
+//  // Expect clients to send "Authorization: Bearer <API_KEY>"
+//  const auth = req.headers.authorization || "";
+//  const [, token] = auth.split(" ");
+//  if (token !== apiKey) {
+//    return res.status(401).json({ success: false, error: "Unauthorized" });
+//  }
+//  next();
+//}
 // -------------------------------
 // 1) Find by AppUserId
 // -------------------------------
@@ -131,7 +131,7 @@ async function updateUserFCMToken(appUserId, fcmToken) {
 }
 
 // Twilio token
-app.post('/api/twilio-token', authenticate, async (req, res) => {
+app.post('/api/twilio-token', async (req, res) => {
   const { appUserId } = req.body;
   if (!appUserId) {
 	return res.status(400).json({ success: false, error: 'Missing mutu' });
@@ -163,7 +163,7 @@ app.post('/api/twilio-token', authenticate, async (req, res) => {
 });
 
 // Make call
-app.post('/api/make-call', authenticate, async (req, res) => {
+app.post('/api/make-call', async (req, res) => {
   const { appUserId, to, url, statusCallback, record } = req.body;
   if (!appUserId || !to || !url) {
 	return res.status(400).json({ success: false, error: 'Missing required parameters' });
@@ -247,7 +247,7 @@ app.post('/api/voice-inbound', async (req, res) => {
 });
 
 // Register device token
-app.post('/api/register-device', authenticate, async (req, res) => {
+app.post('/api/register-device', async (req, res) => {
   const { appUserId, fcmToken } = req.body;
   if (!appUserId || !fcmToken) {
 	return res.status(400).json({ success: false, error: 'Missing identity or FCM token' });
@@ -273,7 +273,7 @@ const MOCK_USERS = [
 
 
 // Call with voicemail
-app.post('/api/call-with-voicemail', authenticate, async (req, res) => {
+app.post('/api/call-with-voicemail',  async (req, res) => {
   const { from, to, timeout } = req.body;
   if (!from || !to || !timeout) {
 	return res.status(400).json({ success: false, error: 'Missing required parameters' });
@@ -293,7 +293,7 @@ app.post('/api/call-with-voicemail', authenticate, async (req, res) => {
 });
 
 // Send message
-app.post('/api/send-message', authenticate, async (req, res) => {
+app.post('/api/send-message',  async (req, res) => {
   const { from, to, body, mediaUrl, statusCallback } = req.body;
   if (!from || !to || !body) {
 	return res.status(400).json({ success: false, error: 'Missing required parameters' });
@@ -314,7 +314,7 @@ app.post('/api/send-message', authenticate, async (req, res) => {
 });
 
 // Get voicemail recordings
-app.get('/api/voicemail-recordings/:callSid', authenticate, async (req, res) => {
+app.get('/api/voicemail-recordings/:callSid', async (req, res) => {
   const { callSid } = req.params;
   try {
 	const recordings = await client.recordings.list({ callSid });
@@ -326,7 +326,7 @@ app.get('/api/voicemail-recordings/:callSid', authenticate, async (req, res) => 
 });
 
 // Get all voicemail recordings
-app.get('/api/all-voicemail-recordings', authenticate, async (req, res) => {
+app.get('/api/all-voicemail-recordings',  async (req, res) => {
   try {
 	const recordings = await client.recordings.list();
 	res.json({ success: true, recordings });
@@ -338,7 +338,7 @@ app.get('/api/all-voicemail-recordings', authenticate, async (req, res) => {
 
 
 // Get call logs
-app.get('/api/call-logs', authenticate, async (req, res) => {
+app.get('/api/call-logs',  async (req, res) => {
   try {
 	const calls = await client.calls.list();
 	res.json({ success: true, calls });
@@ -349,7 +349,7 @@ app.get('/api/call-logs', authenticate, async (req, res) => {
 });
 
 // Get message logs
-app.get('/api/message-logs', authenticate, async (req, res) => {
+app.get('/api/message-logs',  async (req, res) => {
   try {
 	const messages = await client.messages.list();
 	res.json({ success: true, messages });
