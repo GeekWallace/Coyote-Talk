@@ -34,7 +34,7 @@ const ninoxBaseUrl =
   `https://api.ninox.com/v1/teams/${encodeURIComponent(ninoxTeamId)}`
  + `/databases/${encodeURIComponent(ninoxDatabaseId)}`
  + `/tables/${encodeURIComponent(ninoxAppUsersTableId)}`;
-const apiKey = process.env.API_KEY;
+
 if (!apiKey) {
   console.warn("⚠️  Warning: API_KEY is not defined in your .env!");
 }
