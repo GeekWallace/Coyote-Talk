@@ -137,9 +137,9 @@ app.get('/api/twilio-token', async (req, res) => {
   }
   try {
 	const user = await findUserByAppUserId(appUserId);
-	if (!user || !user.length) {
-	  return res.status(404).json({ success: false, error: 'User not found' + user });
-	}
+//	if (!user || !user.length) {
+//	  return res.status(404).json({ success: false, error: 'User not found' + user });
+//	}
 	const identity = user.TwilioClientIdentity;
 	const AccessToken = Twilio.jwt.AccessToken;
 	const VoiceGrant = AccessToken.VoiceGrant;
